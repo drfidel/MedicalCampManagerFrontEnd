@@ -30,15 +30,15 @@ const AuthNavMenu = () => {
                         Welcome {user.first_name}
                       </a>
                       <ul className="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
-                        <li><a className="dropdown-item text-white" href="#">My Profile</a></li>
-                        <li><a className="dropdown-item text-white" href="#">My Dashboard</a></li>
-                        <li><a className="dropdown-item text-white" href="#">My Settings</a></li>
+                        <li><a className="dropdown-item text-white" href="/profile">My Profile</a></li>
+                        <li><a className="dropdown-item text-white" href="/dashboard">My Dashboard</a></li>
+                        <li><a className="dropdown-item text-white" href="/settings">My Settings</a></li>
                         <li><hr className="dropdown-divider"/></li>
-                        <li><a className="dropdown-item text-danger" onClick={logOut}>Logout</a></li>
+                        <li><button className="dropdown-item text-danger" onClick={logOut}>Logout</button></li>
                       </ul>
                     </li>
                     <li className="nav-item">
-                          <a className="nav-link active p-2" style={{backgroundColor: "#C8C"}} onClick={logOut}>logout</a>
+                          <button className="nav-link active p-2" style={{backgroundColor: "#C8C"}} onClick={logOut}>logout</button>
                     </li>
                     </ul>
                     

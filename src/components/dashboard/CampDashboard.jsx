@@ -20,9 +20,7 @@ const CampDashboard = props => {
 
 
   if(!isLoggedIn) {
-    //return redirect('/dashboard')
     router.push('/')
-    window.location.reload();
   }
 
   return (
@@ -53,12 +51,12 @@ const CampDashboard = props => {
         <div className="tab-content" id="nav-tabContent" >
                 <div className="tab-pane fade" id="nav-reception" role="tabpanel" aria-labelledby="nav-reception-tab">
                 <div className="d-flex justify-content-center mt-2 me-2">
-                    <br/>
-                        <a className="btn" style={{backgroundColor: "#A2B", color:"#fff"}} onClick={handleShow}> Add New Patient</a> <span/>
+                        <button className="btn" style={{backgroundColor: "#A2B", color:"#fff"}} onClick={handleShow}> Add New Patient</button> <span/>
                           <>
                             <AddPatient show={show} onClose={handleClose}/>
                           </>
-                        <a href="/" className="btn" style={{backgroundColor: "#A2B", color:"#fff"}}> Revisit</a>
+                          
+                        {/* <a href="/" className="btn" style={{backgroundColor: "#A2B", color:"#fff"}}> Revisit</a> */}
                               
                     </div>
                     <div className="d-flex justify-content-center">

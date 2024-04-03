@@ -48,7 +48,6 @@ const initialState = user
     ? { isLoggedIn: true, user}
     : { isLoggedIn: false, user:null};
 
-console.log(initialState)
 
 const authSlice = createSlice({
     name: "auth",

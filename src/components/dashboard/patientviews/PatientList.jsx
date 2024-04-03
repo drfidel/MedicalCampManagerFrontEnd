@@ -1,16 +1,35 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
+import patientService from "../../../redux/_services/patient.service";
 import Pagination from '../../common/pagination/pagination';
+import Link from 'next/link'
 
 
-let PageSize = 10;
+let PageSize = 5;
 
 const PatientList = () => {
   const { user } = useSelector((state) => state.auth);
   const [content, setContent] = useState("");
   const [searchTerm, setsearchTerm] = useState("");
   const [patients, setPatients] = useState([]);
-  const [filteredSearchList, setfilteredSearchList] = useState([]);
+
+
+  useEffect(() => {
+    patientService.getAllPatientsInfo().then(
+      (response) => {
+        setPatients(response.results);
+      },
+      (error) => {
+        const _content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setPatients(_content);
+      }
+    );
+  }, []);
 
   //adding pagination support
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,22 +39,10 @@ const PatientList = () => {
     setsearchTerm(e.target.value)
   }
 
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    
-    return filteredSearchList.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, filteredSearchList]);
-
+  console.log(patients)
 
   return (
     <div className="container">
-       {/* <h1 className="center-lign"> List of Patients</h1> */}
-      {/* <div className="center-lign">
-        <button>
-          <a href="/cases"> New patient</a>
-        </button> 
-      </div> */}
 
       <div class="container-fluid mt-2 mb-2">
         <form class="d-flex">
@@ -48,7 +55,11 @@ const PatientList = () => {
       <div>
           <form class="d-flex justify-content-between">
           <div class="form-group">
-            <label class="">Filter By Date</label>
+            <label class="">Filter By Date - From</label>
+            <input class="form-control" type="date" placeholder="Date" aria-label="Date"/>
+          </div> To
+          <div class="form-group">
+            <label class=""> </label>
             <input class="form-control" type="date" placeholder="Date" aria-label="Date"/>
           </div>
           <div class="form-group">
@@ -70,13 +81,6 @@ const PatientList = () => {
       
 
       <div className="d-flex flex-row-reverse">
-      <Pagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={patients.length}
-        pageSize={PageSize}
-        onPageChange={page => setCurrentPage(page)}
-      />
       </div>
       
 
@@ -92,19 +96,19 @@ const PatientList = () => {
           </tr>
         </thead>
         <tbody>
-          {currentTableData.map((patient, key) =>
+          {patients.map((patient, key) =>
             <tr key={key}>
               <td className="table-data">  {patient.id} </td>
-              <td className="table-data"> {moment(patient.registration_date).format('DD-MM-YYYY')}</td>
-              <td className="table-data"> {patient.pt_name} </td>
-              <td className="table-data"> {patient.pt_sex} </td>
+              <td className="table-data"> {patient.visit_date}</td>
+              <td className="table-data"> {patient.pt_firstname} {patient.pt_surname} </td>
+              <td className="table-data"> {patient.pt_gender} </td>
               <td className="table-data"> {patient.pt_age} </td>
               <td className="table-data"> 
               <div className="d-flex justify-content-center">
-              <Link to={`/cases/${patient.id}`} className="btn btn-outline-primary btn-sm">Edit</Link>
+              <Link href={`/cases/${patient.id}`} className="btn btn-outline-primary btn-sm">Edit</Link>
               <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
-              <Link to={`/cases/${patient.id}/gopd/encounter`} className="btn btn-primary btn-sm">New Encounter</Link>
-              <Link to={`/cases/${patient.id}/gopd/history`} className="btn btn-secondary btn-sm">History</Link>
+              <Link href={`/cases/${patient.id}/gopd/encounter`} className="btn btn-primary btn-sm">New Encounter</Link>
+              <Link href={`/cases/${patient.id}/gopd/history`} className="btn btn-secondary btn-sm">History</Link>
               </div>
                </td>
             </tr>
@@ -112,13 +116,6 @@ const PatientList = () => {
       </table>
 
       <div className="d-flex justify-content-center">
-      <Pagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={patients.length}
-        pageSize={PageSize}
-        onPageChange={page => setCurrentPage(page)}
-      />
       </div>
     </div>
   )

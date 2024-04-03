@@ -1,3 +1,4 @@
+"use client";
 import { Field } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { ApplicationName } from '../common/Constants'
@@ -8,6 +9,7 @@ import { login } from '../../redux/_slices/auth';
 import { redirect } from 'next/navigation';
 import { useRouter } from 'next/router'
 import { clearMessage } from '../../redux/_slices/message';
+
 
 const Login = () => {
 
@@ -45,17 +47,22 @@ const Login = () => {
     .then((response) => {
       //If login success, open the users dashboard
       //props.history.push("/dashboard")
-      router.push('/dashboard')
-      window.location.reload();
+      console.log(response.ok)
+      if (response.ok){
+        router.push('/dashboard')
+      }
+      else {
+        //print error
+      }
+      
     })
     .catch((e) => {
+      //catch un caught exception
       setLoading(false);
     });
   };
 
   if(isLoggedIn) {
-    //return redirect('/dashboard')
-    window.location.reload();
     router.push('/dashboard')
   }
 

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.css"
 import { Provider } from 'react-redux';
 import store from '../src/redux/store/store';
 import dynamic from 'next/dynamic';
