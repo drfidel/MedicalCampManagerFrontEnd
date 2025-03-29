@@ -45,14 +45,16 @@ const Login = () => {
     dispatch(login({ username, password }))
     .unwrap()
     .then((response) => {
-      //If login success, open the users dashboard
-      //props.history.push("/dashboard")
-      console.log(response.ok)
-      if (response.ok){
+      //If login success, go to the users dashboard
+      if (response){
+        router.reload()
         router.push('/dashboard')
+        setLoading(false);
       }
       else {
         //print error
+        
+        
       }
       
     })

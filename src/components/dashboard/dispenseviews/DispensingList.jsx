@@ -7,7 +7,7 @@ import useEncounters from "../../../utils/hooks/useEncounters";
 import { getencounters } from "../../../redux/_slices/encounter";
 import Pagination from "../../common/pagination/pagination";
 
-const AppointmentList = () => {
+const DispensingList = () => {
 
     const { user } = useSelector((state) => state.auth);
     const [searchTerm, setsearchTerm] = useState("");
@@ -147,10 +147,7 @@ const AppointmentList = () => {
               
               <td className="table-data"> 
                 <div className="d-flex justify-content-center">
-                <Link href={`/encounter/assess/${encounter.id}`} className="btn btn-primary btn-sm m-1">Assess Patient</Link>
-                <button type="button" class="btn btn-danger btn-sm m-1">Delete</button>
-                <Link href={`/cases/${encounter.id}/gopd/encounter`} className="btn btn-primary btn-sm m-1">Review History</Link>
-                <Link href={`/cases/${encounter.id}/gopd/history`} className="btn btn-secondary btn-sm m-1">End Visit </Link>
+                <Link href={`/dispense/${encounter.id}`} className="btn btn-primary btn-sm m-1">Dispense</Link>
                 <button type="button" class="btn btn-warning btn-sm m-1">View Invoice</button>
                 </div>
                </td>
@@ -171,4 +168,4 @@ const AppointmentList = () => {
   )
 }
 
-export default AppointmentList
+export default DispensingList

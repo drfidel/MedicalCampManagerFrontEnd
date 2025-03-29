@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup";
 import { clearMessage } from '../../../redux/_slices/message';
-import { addpatient } from '../../../redux/_slices/patient';
+import { editpatient } from '../../../redux/_slices/patient';
+import patientService from '../../../redux/_services/patient.service';
 
-const AddPatient = (props) => {
-    const { show, onClose } = props;
+const EditPatient = (props) => {
+    const { showedit, onCloseEdit, patientid } = props;
+    const [patient,setSinglePatient] = useState([])
 
     const [successful, setSuccessful] = useState(false)
     const [loading, setLoading] = useState(false);
@@ -21,7 +23,31 @@ const AddPatient = (props) => {
       dispatch(clearMessage());
     }, [dispatch]);
 
+    useEffect(() => {
+        patientService.getSinglePatientInfo(patientid)
+        .then((response) => {
+            setSinglePatient(response.data)
+            initialValues.id = response.id,
+            initialValues.pt_salutation = response.pt_salutation,
+            initialValues.pt_firstname = response.pt_firstname,
+            initialValues.pt_surname = response.pt_surname,
+            initialValues.pt_gender = response.pt_gender,
+            initialValues.pt_age = response.pt_age,
+            initialValues.pt_religion = response.pt_religion,
+            initialValues.pt_village = response.pt_village,
+            initialValues.pt_parish = response.pt_parish,
+            initialValues.pt_subcounty = response.pt_subcounty,
+            initialValues.pt_district = response.pt_district,
+            initialValues.pt_contact = response.pt_contact,
+            initialValues.pt_profession = response.pt_profession,
+            initialValues.pt_nationality = response.pt_nationality,
+            initialValues.pt_nin = response.pt_nin
+        })
+
+    }, [])
+
     const initialValues = {
+      id:"",
       pt_salutation: "",
       pt_firstname: "",
       pt_surname: "",
@@ -52,6 +78,7 @@ const AddPatient = (props) => {
     const handleRegister = (fields) => {
 
       const { 
+          id,
           pt_salutation,
           pt_firstname,
           pt_surname,
@@ -71,7 +98,8 @@ const AddPatient = (props) => {
         setSuccessful(false)
         setLoading(true);
 
-        dispatch(addpatient({
+        dispatch(editpatient({
+          id,
           pt_salutation,
           pt_firstname,
           pt_surname,
@@ -105,14 +133,14 @@ const AddPatient = (props) => {
 
   return (
     <>
-        <Modal size='xl' show={show} onHide={onClose}>
+        <Modal size='xl' show={showedit} onHide={onCloseEdit}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Patient</Modal.Title>
+          <Modal.Title>Edit Patient</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="card bg-secondary">
             <div class="d-flex justify-content-end flex-row">
-                <button class="btn btn-warning btn-sm" onClick={onClose} type="reset"><span>Go back</span></button>
+                <button class="btn btn-warning btn-sm" onClick={onCloseEdit} type="reset"><span>Go back</span></button>
               </div>
 
               <div class="d-flex flex-column">
@@ -137,7 +165,7 @@ const AddPatient = (props) => {
                   </div>
                   <div className="form-group">
                   <label htmlFor="pt_salutation">Salutation</label>
-                    <Field name="pt_salutation" as="select" className="form-control">
+                  <Field name="pt_salutation" as="select" className="form-control">
                         <option value="" selected="true">Select</option>
                         <option value="Mr.">Mr.</option>
                         <option value="Eng.">Eng.</option>
@@ -148,6 +176,7 @@ const AddPatient = (props) => {
                         <option value="Sgt.">Sgt.</option>
                         <option value="Maj.">Maj.</option>
                     </Field>
+                    
                     <ErrorMessage
                       name="pt_salutation"
                       component="div"
@@ -321,9 +350,9 @@ const AddPatient = (props) => {
                         {loading && (
                           <span className="spinner-border spinner-border-sm"></span>
                         )}
-                      <span>Register Patient</span>
+                      <span>Edit Patient</span>
                     </button>
-                    <button type="reset" className="btn btn-danger btn-block" onClick={onClose}>Cancel Patient</button>
+                    <button type="reset" className="btn btn-danger btn-block" onClick={onCloseEdit}>Cancel Patient</button>
                   </div> 
                     
                   </div>
@@ -357,10 +386,11 @@ const AddPatient = (props) => {
               </div>
             )}
             
-            {message === "Created" && (
-              <div className="form-group">
+
+            {message === "OK" && (
+              <div className="form-group" closeButton>
                 <div className="alert alert-success" role="alert">
-                  {message} : Patient Register successful
+                  {message} : Patient Edit successful
                 </div>
               </div>
             )}
@@ -372,4 +402,4 @@ const AddPatient = (props) => {
   )
 }
 
-export default AddPatient;
+export default EditPatient;

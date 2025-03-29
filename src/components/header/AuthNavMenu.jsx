@@ -6,23 +6,23 @@ import { logout } from '../../redux/_slices/auth';
 
 const AuthNavMenu = () => {
 
-  const { user } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const  { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter()
+  
 
   const logOut = useCallback(() => {  
     dispatch(logout());
     router.push('/')
   }, [dispatch]);
-  
 
 
   return (
     <div className='d-flex justify-content-end'>
 
                   <ul className="d-flex navbar-nav">
-                    { user ? (
+                    { isLoggedIn ? (
                       
                     <ul className='navbar-nav'>
                       <li className="nav-item dropdown">

@@ -8,7 +8,7 @@ import store from '../../redux/store/store';
 
 const NavigationBar = () => {
   return (
-        <nav className="navbar sticky-top navbar-expand-sm navbar-dark" style={{backgroundColor: "#A9B"}}>
+        <nav className="navbar sticky-top navbar-expand-md navbar-expand-lg navbar-dark" style={{backgroundColor: "#A9B"}}>
 
           <div className="d-sm-flex container-sm">
               <a className="navbar-brand" href="/">{ApplicationName}</a>

@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from './usePagination';
-import './pagination.module.scss';
+
 
 const Pagination = props => {
   const {
@@ -12,6 +12,7 @@ const Pagination = props => {
     pageSize,
     className
   } = props;
+
 
   const paginationRange = usePagination({
     currentPage,
@@ -25,10 +26,13 @@ const Pagination = props => {
   }
 
   const onNext = () => {
+    //trigger fetch of new page
     onPageChange(currentPage + 1);
+
   };
 
   const onPrevious = () => {
+    //trigger fetch of previous page
     onPageChange(currentPage - 1);
   };
 

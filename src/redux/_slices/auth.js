@@ -6,14 +6,9 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-//const user = cookies.get('user',{ doNotParse: 'true' });
-//const user = JSON.stringify(cookies.get('user'));
+//get user details from cookie  
 const user = cookies.get('user');
-//console.log(user)
-//TODO remove this in production
-// if (typeof window !== 'undefined') {
-//     const user = JSON.parse(localStorage.getItem("user"));
-// }
+
 
 
 //Login slice
@@ -59,7 +54,7 @@ const authSlice = createSlice({
                 state.user = action.payload.user;
             })
         .addCase(login.rejected,(state, action) => {
-            state,isLoggedIn = false;
+            state.isLoggedIn = false;
             state.user = null;
         })
         .addCase(logout.fulfilled, (state, action) => {

@@ -15,12 +15,12 @@ const login = (username, password) => {
     })
     .then((response) => {
         if (response.data) {
-            localStorage.setItem("user", JSON.stringify(response.data.user));
+            //localStorage.setItem("user", JSON.stringify(response.data.user));
             cookies.set("access", JSON.stringify(response.data.access), { path: '/'});
             cookies.set("user", JSON.stringify(response.data.user), { path: '/'});
         }
         //console.log(response.data)
-        return response.data.user
+        return response.data
     });
 };
 
@@ -29,7 +29,7 @@ const logout = () => {
     .post(API_URL + "mob/auth/logout/",{})
     .then((response) => {
         if (response.data) {
-            localStorage.removeItem("user");
+            //localStorage.removeItem("user");
             cookies.remove("access", { path: '/' });
             cookies.remove("user", { path: '/' });
         }

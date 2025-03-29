@@ -7,6 +7,8 @@ import  Button  from 'react-bootstrap/Button';
 import AddPatient from './patientviews/AddPatient';
 import PatientList from './patientviews/PatientList';
 import AppointmentList from './encounterviews/AppointmentList';
+import InventoryList from './inventoryviews/InventoryList';
+import DispensingList from './dispenseviews/DispensingList';
 
 
 
@@ -16,7 +18,8 @@ const CampDashboard = props => {
   const router = useRouter()
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false); //submit form data as form closes
+  const handleClose = () => {setShow(false) 
+                            router.reload()}; //submit form data as form closes
 
 
   if(!isLoggedIn) {
@@ -26,8 +29,8 @@ const CampDashboard = props => {
   return (
     <div>
         <div className="nav nav-tabs col-lg" id="nav-tab" role="tablist">
-            <button className="nav-link" id="nav-reception-tab" data-bs-toggle="tab" data-bs-target="#nav-reception" type="button" role="tab" 
-            aria-controls="nav-reception" aria-selected="false" style={{color: "#A2B"}}>Reception</button>
+            <button className="nav-link active" id="nav-reception-tab" data-bs-toggle="tab" data-bs-target="#nav-reception" type="button" role="tab" 
+            aria-controls="nav-reception" aria-selected="true" style={{color: "#A2B"}}>Reception</button>
 
             <button className="nav-link" id="nav-appointments-tab" data-bs-toggle="tab" data-bs-target="#nav-appointments" type="button" role="tab" 
             aria-controls="nav-appointments" aria-selected="false" style={{color: "#A2B"}}>Appointments</button>
@@ -49,9 +52,9 @@ const CampDashboard = props => {
         </div>
 
         <div className="tab-content" id="nav-tabContent" >
-                <div className="tab-pane fade" id="nav-reception" role="tabpanel" aria-labelledby="nav-reception-tab">
+                <div className="tab-pane fade show active" id="nav-reception" role="tabpanel" aria-labelledby="nav-reception-tab">
                 <div className="d-flex justify-content-center mt-2 me-2">
-                        <button className="btn" style={{backgroundColor: "#A2B", color:"#fff"}} onClick={handleShow}> Add New Patient</button> <span/>
+                        <button className="btn" style={{backgroundColor: "#A2B", color:"#fff"}} onClick={handleShow}> Add New Patient</button>
                           <>
                             <AddPatient show={show} onClose={handleClose}/>
                           </>
@@ -86,9 +89,13 @@ const CampDashboard = props => {
                 </div>
                     
 
-                <div className="tab-pane fade" id="nav-pharmacy" role="tabpanel" aria-labelledby="nav-pharmacy-tab">...pharmacy</div>
+                <div className="tab-pane fade" id="nav-pharmacy" role="tabpanel" aria-labelledby="nav-pharmacy-tab">
+                  <DispensingList/>
+                </div>
 
-                <div className="tab-pane fade" id="nav-inventory" role="tabpanel" aria-labelledby="nav-inventory-tab">...inventory</div>
+                <div className="tab-pane fade" id="nav-inventory" role="tabpanel" aria-labelledby="nav-inventory-tab">
+                  <InventoryList/>
+                </div>
 
                 <div className="tab-pane fade" id="nav-reports" role="tabpanel" aria-labelledby="nav-reports-tab">...report</div>
 

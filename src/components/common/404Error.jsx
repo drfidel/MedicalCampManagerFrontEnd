@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Error404 = () => {
+const Error404 = ({errorstatus, statusText, message}) => {
   return (
-    <div>404Error-Request not found</div>
+    <div>
+      <h1>{errorstatus} : {statusText} </h1>
+    </div>
   )
 }
 
